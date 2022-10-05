@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LoginController!{% endblock %}
+
+{% block body %}
+    <section class="hero is-small is-primary mb-6">
+        <div class="hero-body">
+            <p class="title">
+                Log in
+            </p>
+            <p class="subtitle">
+                ¡Hola! Introduce tus credenciales para acceder al sistema.
+            </p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="column is-three-fifths m-auto">
+
+            <div class="box">
+                {{ form_start(form) }}
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            {{ form_row(form.email) }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            {{ form_row(form.password) }}
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{#    #}
+{% endblock %}

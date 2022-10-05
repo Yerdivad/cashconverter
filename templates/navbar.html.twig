@@ -1,0 +1,48 @@
+{% set defaultPage = 'app_login' %}
+
+{% if token is defined and token|length > 0 %}
+    {% set defaultPage = 'app_home' %}
+{% endif %}
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ path(defaultPage) }}">
+            <img src="https://cashconverters.es/cc-landing/media/cashconverters_logo_movimiento_converters.png" alt="logo">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{{ path(defaultPage) }}">
+                Inicio
+            </a>
+
+            <a class="navbar-item" href="{{ path(defaultPage) }}">
+                Usuarios
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    {% if token is defined %}
+                        <a class="button is-primary" href="{{ path('app_logout') }}">
+                            Log out
+                        </a>
+                    {% else %}
+                        <a class="button is-primary" href="{{ path('app_login') }}">
+                            Log in
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
