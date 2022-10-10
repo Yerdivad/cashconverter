@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+    {% set defaultPage = 'app_login' %}
+
+    {% if token is defined and token|length > 0 %}
+        {% set defaultPage = 'app_home' %}
+    {% endif %}
+    <section class="hero is-small is-primary mb-2">
+        <div class="hero-body">
+            <p class="title">
+                {{category.name}}
+            </p>
+            <p class="subtitle">
+                ¿Tienes un {{ category.name}} en el cajón sin usar? Responde a las siguientes preguntas y te enviaremos una tasación.
+            </p>
+        </div>
+    </section>
+    <section class="section is-small">
+        <div class="container is-max-desktop">
+            <form id="attributes" class="box p-6">
+                {% for input in inputs|sort((a, b) => a.priority < b.priority) %}
+                    {% if input.type == 'text'%}
+                        <div class="field">
+                            <label class="label">{{ input.name }}</label>
+                            {% if input.required %}
+                                <span class="is-size-7 has-text-danger">Requerido</span>
+                            {% endif %}
+                            <div class="control">
+                                <input id="{{ input.name|lower }}" class="input" type="text" placeholder="Text input">
+                            </div>
+                        </div>
+                    {% elseif input.type == 'select' %}
+                        {% set visibility = ''%}
+                        {% if input.name == 'Modelo'  %}
+                            {% set visibility = 'hidden' %}
+                        {% endif %}
+                        <div id="{{ input.name|lower }}-field" class="field" {{ visibility }}>
+                            <label class="label">{{ input.name }}</label>
+                            {% if input.required %}
+                                <span class="is-size-7 has-text-danger required-tag">Requerido</span>
+                            {% endif %}
+                            <div class="control">
+                                <div class="select">
+                                    <select id="{{ input.name|lower }}" data-options="{{ input.options|json_encode }}" required>
+                                        <option>Elige la opción</option>
+                                        {% for option in input.options %}
+                                            <option value="{{ option.id }}">{{ option.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="save" class="button is-link" disabled>Guardar</button>
+                    </div>
+                    <div class="control">
+                        <a class="button is-link is-light" href="{{ path(defaultPage) }}">Volver al Inicio</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
